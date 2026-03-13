@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+        .wrap {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+        }
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: #6c5ce7;
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+        .pending { color: #d97706; font-weight: bold; }
+        .approved { color: #059669; font-weight: bold; }
+        .rejected { color: #dc2626; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="top">
+            <div>
+                <h2>Creator Dashboard</h2>
+                <p>Track your submitted news and videos.</p>
+            </div>
+            <div>
+                <a class="btn" href="{% url 'submit_content' %}">Submit New Content</a>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in submissions %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.get_submission_type_display }}</td>
+                    <td>{{ item.get_category_display }}</td>
+                    <td>
+                        <span class="{{ item.status }}">{{ item.status|title }}</span>
+                    </td>
+                    <td>{{ item.created_at }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No submissions yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

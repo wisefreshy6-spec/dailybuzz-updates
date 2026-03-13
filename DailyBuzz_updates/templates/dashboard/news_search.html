@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search News</title>
+    {% if site_settings and site_settings.favicon %}
+        <link rel="icon" href="{{ site_settings.favicon.url }}">
+    {% endif %}
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #eef2f7; color: #1f2937; }
+        .topbar { background: linear-gradient(135deg, #6c5ce7, #00b894); color: white; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+        .brand { display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 20px; }
+        .brand img { width: 38px; height: 38px; object-fit: cover; border-radius: 10px; background: rgba(255,255,255,0.18); }
+        .logo-box { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .topbar a { color: white; text-decoration: none; font-weight: bold; margin-left: 18px; }
+        .container { max-width: 1150px; margin: 30px auto; padding: 0 20px 40px; }
+        .hero { background: white; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.07); padding: 24px; margin-bottom: 22px; }
+        .search-form { display: grid; grid-template-columns: 1fr 220px 140px; gap: 12px; }
+        .search-form input, .search-form select, .search-form button { padding: 12px; border-radius: 10px; border: 1px solid #d0d5dd; }
+        .search-form button { background: #6c5ce7; color: white; border: none; font-weight: bold; cursor: pointer; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+        .post-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        .post-image { width: 100%; height: 220px; object-fit: cover; display: block; }
+        .post-body { padding: 18px; }
+        .post-body a { text-decoration: none; color: #111827; }
+        .meta { color: #667085; font-size: 14px; margin-top: 10px; line-height: 1.6; }
+        @media (max-width: 900px) {
+            .search-form { grid-template-columns: 1fr; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand">
+            {% if site_settings and site_settings.logo %}
+                <img src="{{ site_settings.logo.url }}" alt="Logo">
+            {% else %}
+                <div class="logo-box">DB</div>
+            {% endif %}
+            <div>{% if site_settings %}{{ site_settings.site_name }}{% else %}Daily Buzz Updates{% endif %}</div>
+        </div>
+        <div>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Search News</h2>
+            <form method="get" class="search-form">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search by title, content, editor...">
+                <select name="category">
+                    <option value="">All Categories</option>
+                    <option value="entertainment" {% if selected_category == 'entertainment' %}selected{% endif %}>Entertainment</option>
+                    <option value="sports" {% if selected_category == 'sports' %}selected{% endif %}>Sports</option>
+                    <option value="politics" {% if selected_category == 'politics' %}selected{% endif %}>Politics</option>
+                    <option value="technology" {% if selected_category == 'technology' %}selected{% endif %}>Technology</option>
+                    <option value="business" {% if selected_category == 'business' %}selected{% endif %}>Business</option>
+                    <option value="health" {% if selected_category == 'health' %}selected{% endif %}>Health</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="grid">
+            {% for post in posts %}
+                <div class="post-card">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+                    {% endif %}
+                    <div class="post-body">
+                        <a href="{% url 'news_detail' post.id %}">
+                            <h3>{{ post.title }}</h3>
+                        </a>
+                        <p>{{ post.summary }}</p>
+                        <div class="meta">
+                            {{ post.get_category_display }} • {{ post.created_at }}<br>
+                            Editor: {{ post.editor_name }}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="post-card">
+                    <div class="post-body">
+                        <h3>No matching results</h3>
+                        <p>Try another keyword or category filter.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

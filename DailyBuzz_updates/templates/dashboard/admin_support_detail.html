@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ ticket.case_number }}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 980px;
+            margin: 30px auto;
+            background: white;
+            padding: 24px;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+        }
+        .meta {
+            color: #667085;
+            margin-bottom: 20px;
+        }
+        .chat {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+        .bubble {
+            max-width: 78%;
+            padding: 14px 16px;
+            border-radius: 16px;
+            line-height: 1.6;
+        }
+        .user {
+            align-self: flex-start;
+            background: #f3f4f6;
+            color: #111827;
+        }
+        .ai {
+            align-self: flex-start;
+            background: #ede9fe;
+            color: #4c1d95;
+        }
+        .agent {
+            align-self: flex-end;
+            background: #dcfce7;
+            color: #14532d;
+        }
+        .time {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+        .attachment {
+            display: inline-block;
+            margin-top: 10px;
+            color: inherit;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        textarea, input[type="file"], select, button {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+        textarea, select {
+            border: 1px solid #d0d5dd;
+            margin-bottom: 14px;
+        }
+        input[type="file"] {
+            margin-bottom: 14px;
+        }
+        button {
+            background: #00b894;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
+        .sidebox {
+            background: #fafafa;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+            height: fit-content;
+        }
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Support Case Detail</strong></div>
+        <div><a href="{% url 'admin_support_list' %}">Back to Cases</a></div>
+    </div>
+
+    <div class="container">
+        <div class="grid">
+            <div>
+                <h2>{{ ticket.subject }}</h2>
+                <div class="meta">
+                    <strong>{{ ticket.case_number }}</strong> • {{ ticket.user.username }} • {{ ticket.get_issue_type_display }} • {{ ticket.get_status_display }}
+                </div>
+
+                <div class="chat">
+                    {% for msg in ticket.messages.all %}
+                        <div class="bubble {% if msg.sender == 'user' %}user{% elif msg.sender == 'ai' %}ai{% else %}agent{% endif %}">
+                            {% if msg.message %}
+                                <div>{{ msg.message }}</div>
+                            {% endif %}
+                            {% if msg.attachment %}
+                                <a class="attachment" href="{{ msg.attachment.url }}" target="_blank">Open attachment</a>
+                            {% endif %}
+                            <div class="time">{{ msg.created_at }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ reply_form.as_p }}
+                    <button type="submit" name="send_reply">Send Agent Reply</button>
+                </form>
+            </div>
+
+            <div class="sidebox">
+                <h3>Update Ticket Status</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ status_form.as_p }}
+                    <button type="submit" name="update_status">Update Status</button>
+                </form>
+
+                <p><strong>User unread:</strong> {{ ticket.user_unread_count }}</p>
+                <p><strong>Admin unread:</strong> {{ ticket.admin_unread_count }}</p>
+                <p><strong>Escalated:</strong> {{ ticket.escalated_to_human }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

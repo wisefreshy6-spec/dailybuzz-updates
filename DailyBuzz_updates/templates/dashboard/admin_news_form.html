@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; }
+        .topbar { background: linear-gradient(135deg, #6c5ce7, #00b894); color: white; padding: 16px 24px; display: flex; justify-content: space-between; }
+        .topbar a { color: white; text-decoration: none; font-weight: bold; }
+        .container { max-width: 850px; margin: 30px auto; background: white; padding: 30px; border-radius: 14px; box-shadow: 0 4px 18px rgba(0,0,0,0.08); }
+        input, textarea, select, button { width: 100%; padding: 12px; margin-top: 10px; margin-bottom: 18px; box-sizing: border-box; }
+        button { background: #6c5ce7; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Daily Buzz Admin Panel</strong></div>
+        <div><a href="{% url 'admin_news_list' %}">Back to Posts</a></div>
+    </div>
+
+    <div class="container">
+        <h2>{{ page_title }}</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Post</button>
+        </form>
+    </div>
+</body>
+</html>

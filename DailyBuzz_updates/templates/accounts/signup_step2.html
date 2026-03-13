@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Step 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .box {
+            background: white;
+            padding: 2rem;
+            width: 420px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.2);
+        }
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .errorlist {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Create Account - Step 2</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+       <form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <div style="margin-top:10px;">
+        <label>
+            <input type="checkbox" name="terms_accepted" required>
+            I have read and agree to the 
+            <a href="{% url 'terms' %}" target="_blank">Terms and Conditions</a>.
+        </label>
+    </div>
+
+    <button type="submit">Create Account</button>
+</form>
+    </div>
+</body>
+</html>

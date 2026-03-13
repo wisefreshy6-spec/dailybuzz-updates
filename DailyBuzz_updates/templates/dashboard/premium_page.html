@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Page</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            color: #222;
+        }
+
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 18px;
+        }
+
+        .wrapper {
+            max-width: 1050px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            padding: 40px;
+            margin-bottom: 28px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e8fff7;
+            color: #0f9f7d;
+            font-weight: bold;
+            padding: 8px 14px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            margin: 0 0 12px 0;
+            font-size: 38px;
+        }
+
+        .subtitle {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Daily Buzz Updates Premium</strong></div>
+        <div>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'security' %}">Security</a>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="hero">
+            <div class="badge">Premium Active</div>
+            <h1>Welcome to Premium, {{ user.first_name|default:user.username }}</h1>
+            <p class="subtitle">
+                Your premium membership is active. This area can hold exclusive
+                stories, special news briefings, downloads, premium newsletters,
+                and members-only content.
+            </p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Exclusive Stories</h3>
+                <p>Premium-only articles and special reports can appear here.</p>
+            </div>
+            <div class="card">
+                <h3>Member Downloads</h3>
+                <p>Exclusive files, reports, and bonus content can be added here.</p>
+            </div>
+            <div class="card">
+                <h3>Early Access</h3>
+                <p>Give premium users early access to important updates and features.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Cases</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+        }
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        .ticket {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        .ticket a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .meta {
+            color: #667085;
+            margin-top: 8px;
+        }
+        .badge {
+            background: #ef4444;
+            color: white;
+            min-width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Daily Buzz Support Admin</strong></div>
+        <div>
+            <a href="{% url 'admin_news_list' %}">Manage News</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Support Cases</h2>
+
+        {% for ticket in tickets %}
+            <div class="ticket">
+                <div>
+                    <a href="{% url 'admin_support_detail' ticket.id %}">{{ ticket.subject }}</a>
+                    <div class="meta">
+                        {{ ticket.case_number }} • {{ ticket.user.username }} • {{ ticket.get_issue_type_display }} • {{ ticket.get_status_display }}
+                    </div>
+                </div>
+                {% if ticket.admin_unread_count > 0 %}
+                    <div class="badge">{{ ticket.admin_unread_count }}</div>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No support cases yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

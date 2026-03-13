@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Center</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #1f2937;
+        }
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: bold;
+        }
+        .wrapper {
+            max-width: 1150px;
+            margin: 32px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 24px;
+        }
+        .panel {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+            padding: 24px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #efe9ff;
+            color: #5b3fd1;
+            font-weight: bold;
+            padding: 8px 14px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+        h1, h2, h3 {
+            margin-top: 0;
+        }
+        .muted {
+            color: #667085;
+            line-height: 1.7;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 1px solid #d0d5dd;
+        }
+        button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+        .quick-chip {
+            background: #f8fafc;
+            border: 1px solid #e4e7ec;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 14px;
+        }
+        .ticket-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #fafafa;
+        }
+        .ticket-card a {
+            text-decoration: none;
+            color: #111827;
+            font-weight: bold;
+        }
+        .case {
+            color: #6c5ce7;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+        .unread {
+            display: inline-block;
+            margin-top: 8px;
+            background: #ef4444;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .email-box {
+            margin-top: 18px;
+            background: #eefbf7;
+            border: 1px solid #c7f0e1;
+            border-radius: 14px;
+            padding: 16px;
+        }
+        .message {
+            color: green;
+            margin-bottom: 12px;
+        }
+        @media (max-width: 950px) {
+            .wrapper {
+                grid-template-columns: 1fr;
+            }
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Daily Buzz Support Center</strong></div>
+        <div>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'security' %}">Security</a>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="panel">
+            <div class="hero-badge">AI Support Assistant</div>
+            <h1>Get help faster</h1>
+            <p class="muted">
+                Ask the AI assistant first. If the issue needs extra help,
+                it will be escalated to a human support team and assigned a case number.
+            </p>
+
+            <div class="quick-grid">
+                <div class="quick-chip">Login help</div>
+                <div class="quick-chip">Password reset</div>
+                <div class="quick-chip">Premium payment issues</div>
+                <div class="quick-chip">Verification code issues</div>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Start Support Request</button>
+            </form>
+
+            <div class="email-box">
+                <h3>Email Support</h3>
+                <p class="muted">You can also contact support directly via email.</p>
+                <p><strong>dupdateske@gmail.com</strong></p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Recent Support Cases</h2>
+
+            {% for ticket in recent_tickets %}
+                <div class="ticket-card">
+                    <div class="case">{{ ticket.case_number }}</div>
+                    <a href="{% url 'support_ticket_detail' ticket.id %}">{{ ticket.subject }}</a>
+                    <p class="muted">{{ ticket.get_issue_type_display }} • {{ ticket.get_status_display }}</p>
+
+                    {% if ticket.user_unread_count > 0 %}
+                        <div class="unread">New replies: {{ ticket.user_unread_count }}</div>
+                    {% endif %}
+                </div>
+            {% empty %}
+                <p class="muted">No support cases yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

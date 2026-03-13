@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Content</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+        }
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 24px;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .msg {
+            color: green;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Submit News / Video</strong></div>
+        <div><a href="{% url 'dashboard' %}">Back to Dashboard</a></div>
+    </div>
+
+    <div class="container">
+        <h2>Submit Content for Review</h2>
+        <p>Your content will remain pending until approved by admin.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="msg">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit for Review</button>
+        </form>
+    </div>
+</body>
+</html>

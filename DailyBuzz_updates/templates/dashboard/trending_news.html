@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending News</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #eef2f7; margin: 0; }
+        .wrap { max-width: 1000px; margin: 30px auto; background: white; padding: 24px; border-radius: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+        .item { padding: 16px 0; border-bottom: 1px solid #e5e7eb; }
+        .item h3 { margin: 0 0 8px 0; }
+        .meta { color: #6b7280; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h2>Trending News</h2>
+        {% for post in posts %}
+        <div class="item">
+            <h3><a href="{% url 'news_detail' post.id %}">{{ post.title }}</a></h3>
+            <div class="meta">{{ post.category|title }} • {{ post.views_count }} views</div>
+            <p>{{ post.summary }}</p>
+        </div>
+        {% empty %}
+        <p>No trending posts yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

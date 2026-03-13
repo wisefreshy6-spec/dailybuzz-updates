@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category_name }}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #1f2937;
+        }
+
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 18px;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 30px auto;
+            padding: 0 20px 40px;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #efe9ff;
+            color: #5b3fd1;
+            font-weight: bold;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            margin: 0 0 10px 0;
+        }
+
+        .hero p {
+            margin: 0;
+            color: #667085;
+            line-height: 1.7;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-body {
+            padding: 18px;
+        }
+
+        .post-body a {
+            text-decoration: none;
+            color: #111827;
+        }
+
+        .post-body h3 {
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+        }
+
+        .post-body p {
+            color: #667085;
+            line-height: 1.6;
+        }
+
+        .meta {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 12px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 850px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand">
+            <div class="logo-box">DB</div>
+            <div>Daily Buzz Updates</div>
+        </div>
+
+        <div>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'support_center' %}">Support</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <div class="badge">{{ category_name }}</div>
+            <h1>{{ category_name }} News</h1>
+            <p>Browse the latest {{ category_name|lower }} stories, updates, and featured reports.</p>
+        </div>
+
+        <div class="grid">
+            {% for post in posts %}
+                <div class="post-card">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="post-image">
+                    {% endif %}
+                    <div class="post-body">
+                        <a href="{% url 'news_detail' post.id %}">
+                            <h3>{{ post.title }}</h3>
+                        </a>
+                        <p>{{ post.summary }}</p>
+                        <div class="meta">
+                            {{ post.created_at }}<br>
+                            Editor: {{ post.editor_name }}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="post-card">
+                    <div class="post-body">
+                        <h3>No posts available yet</h3>
+                        <p>There are no published stories in this category right now.</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

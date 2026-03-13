@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Premium Payment</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 80px auto;
+            background: white;
+            padding: 36px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .note {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 22px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #6c5ce7;
+            color: white;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 8px;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Premium Payment Setup</h1>
+
+        <p class="note">
+            Your premium section is now working correctly.
+            The real payment gateway has not been connected yet,
+            so this page is acting as the payment start page for now.
+        </p>
+
+        <div class="box">
+            <p><strong>Logged in as:</strong> {{ user.username }}</p>
+            <p><strong>Planned premium price:</strong> KES 299</p>
+            <p><strong>Next step:</strong> Connect Paystack checkout and payment verification.</p>
+        </div>
+
+        <a href="{% url 'premium_success' %}" class="btn">Test Premium Success Page</a>
+        <a href="{% url 'premium_page' %}" class="btn btn-secondary">Back to Premium</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+        }
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+        .item {
+            margin-bottom: 18px;
+        }
+        .label {
+            font-weight: bold;
+            color: #555;
+        }
+        .value {
+            margin-top: 6px;
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Daily Buzz Updates</strong></div>
+        <div>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'security' %}">Security</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Profile</h2>
+
+        <div class="item">
+            <div class="label">First Name</div>
+            <div class="value">{{ user.first_name }}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Last Name</div>
+            <div class="value">{{ user.last_name }}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Username</div>
+            <div class="value">{{ user.username }}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Email</div>
+            <div class="value">{{ user.email }}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Date of Birth</div>
+            <div class="value">{{ user.date_of_birth }}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Country</div>
+            <div class="value">{{ user.get_country_display }}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Address</div>
+            <div class="value">{{ user.address|default:"Not provided" }}</div>
+        </div>
+
+        <div class="item">
+            <div class="label">Phone</div>
+            <div class="value">{{ user.phone_code }} {{ user.phone_number }}</div>
+        </div>
+    </div>
+</body>
+</html>

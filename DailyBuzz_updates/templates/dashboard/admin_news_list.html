@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage News</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; }
+        .topbar { background: linear-gradient(135deg, #6c5ce7, #00b894); color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .topbar a { color: white; text-decoration: none; margin-left: 18px; font-weight: bold; }
+        .container { max-width: 1100px; margin: 30px auto; background: white; padding: 25px; border-radius: 14px; box-shadow: 0 4px 18px rgba(0,0,0,0.08); }
+        .btn { display: inline-block; padding: 10px 16px; background: #6c5ce7; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+        .action a { margin-right: 10px; text-decoration: none; font-weight: bold; }
+        .delete { color: #dc2626; }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Daily Buzz Admin Panel</strong></div>
+        <div>
+            <a href="{% url 'dashboard' %}">User Dashboard</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Manage News Posts</h2>
+        <a href="{% url 'admin_news_add' %}" class="btn">+ Add News Post</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Published</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.get_category_display }}</td>
+                    <td>{{ post.is_published }}</td>
+                    <td>{{ post.created_at }}</td>
+                    <td class="action">
+                        <a href="{% url 'admin_news_edit' post.id %}">Edit</a>
+                        <a href="{% url 'admin_news_delete' post.id %}" class="delete">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No posts yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

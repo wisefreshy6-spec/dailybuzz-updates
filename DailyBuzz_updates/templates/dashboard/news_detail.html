@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    {% if site_settings and site_settings.favicon %}
+        <link rel="icon" href="{{ site_settings.favicon.url }}">
+    {% endif %}
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #eef2f7; color: #1f2937; }
+        .topbar { background: linear-gradient(135deg, #6c5ce7, #00b894); color: white; padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
+        .brand { display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 20px; }
+        .brand img { width: 38px; height: 38px; object-fit: cover; border-radius: 10px; background: rgba(255,255,255,0.18); }
+        .logo-box { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .topbar a { color: white; text-decoration: none; font-weight: bold; margin-left: 18px; }
+        .wrapper { max-width: 1180px; margin: 30px auto; padding: 0 20px 40px; display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+        .article-card { background: white; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.07); overflow: hidden; }
+        .article-header { padding: 30px 30px 20px; }
+        .badge { display: inline-block; background: #efe9ff; color: #5b3fd1; font-weight: bold; padding: 8px 14px; border-radius: 999px; font-size: 13px; margin-bottom: 14px; }
+        h1 { margin: 0 0 14px 0; font-size: 40px; line-height: 1.15; }
+        .summary { font-size: 18px; color: #667085; line-height: 1.7; margin-bottom: 14px; }
+        .meta { color: #6b7280; font-size: 14px; line-height: 1.8; }
+        .hero-image { width: 100%; max-height: 460px; object-fit: cover; display: block; }
+        .article-content { padding: 30px; line-height: 1.9; font-size: 17px; color: #1f2937; white-space: pre-line; }
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .side-card { background: white; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.07); padding: 22px; }
+        .side-card h3 { margin-top: 0; margin-bottom: 14px; }
+        .related-item { padding: 12px 0; border-bottom: 1px solid #ececec; }
+        .related-item:last-child { border-bottom: none; }
+        .related-item a { text-decoration: none; color: #111827; font-weight: bold; line-height: 1.5; }
+        .related-meta { margin-top: 6px; color: #6b7280; font-size: 13px; }
+        .nav-links a { display: block; padding: 12px 0; text-decoration: none; color: #111827; font-weight: bold; border-bottom: 1px solid #ececec; }
+        .nav-links a:last-child { border-bottom: none; }
+        .share-box { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+        .share-btn, .copy-btn { background: #f3f4f6; border-radius: 10px; padding: 12px; text-align: center; font-weight: bold; color: #111827; text-decoration: none; border: none; cursor: pointer; font-size: 14px; }
+        .copy-btn:hover, .share-btn:hover { background: #e5e7eb; }
+        @media (max-width: 960px) { .wrapper { grid-template-columns: 1fr; } h1 { font-size: 32px; } .article-content { font-size: 16px; } }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand">
+            {% if site_settings and site_settings.logo %}
+                <img src="{{ site_settings.logo.url }}" alt="Logo">
+            {% else %}
+                <div class="logo-box">DB</div>
+            {% endif %}
+            <div>{% if site_settings %}{{ site_settings.site_name }}{% else %}Daily Buzz Updates{% endif %}</div>
+        </div>
+        <div>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'news_category' post.category %}">Back to Category</a>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="article-card">
+            <div class="article-header">
+                <div class="badge">{{ post.get_category_display }}</div>
+                <h1>{{ post.title }}</h1>
+                <p class="summary">{{ post.summary }}</p>
+                <div class="meta">
+                    Published on {{ post.created_at }}<br>
+                    Editor: {{ post.editor_name }}
+                </div>
+            </div>
+
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="hero-image">
+            {% endif %}
+
+            <div class="article-content">
+                {{ post.content }}
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="side-card">
+                <h3>Share this story</h3>
+                <div class="share-box">
+                    <a class="share-btn" target="_blank" href="https://wa.me/?text={{ post.title|urlencode }}%20{{ article_url|urlencode }}">WhatsApp</a>
+                    <a class="share-btn" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ article_url|urlencode }}">Facebook</a>
+                    <a class="share-btn" target="_blank" href="https://twitter.com/intent/tweet?text={{ post.title|urlencode }}&url={{ article_url|urlencode }}">X / Twitter</a>
+                    <button class="copy-btn" onclick="copyArticleLink()">Copy Link</button>
+                </div>
+            </div>
+
+            <div class="side-card">
+                <h3>More in {{ post.get_category_display }}</h3>
+                {% for item in related_posts %}
+                    <div class="related-item">
+                        <a href="{% url 'news_detail' item.id %}">{{ item.title }}</a>
+                        <div class="related-meta">{{ item.created_at }}</div>
+                    </div>
+                {% empty %}
+                    <p>No related stories yet.</p>
+                {% endfor %}
+            </div>
+
+            <div class="side-card">
+                <h3>Quick Links</h3>
+                <div class="nav-links">
+                    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+                    <a href="{% url 'news_category' 'entertainment' %}">Entertainment</a>
+                    <a href="{% url 'news_category' 'sports' %}">Sports</a>
+                    <a href="{% url 'news_category' 'politics' %}">Politics</a>
+                    <a href="{% url 'news_category' 'technology' %}">Technology</a>
+                    <a href="{% url 'news_category' 'business' %}">Business</a>
+                    <a href="{% url 'news_category' 'health' %}">Health</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyArticleLink() {
+            navigator.clipboard.writeText("{{ article_url|escapejs }}")
+                .then(function () {
+                    alert("Article link copied successfully.");
+                })
+                .catch(function () {
+                    alert("Unable to copy link.");
+                });
+        }
+    </script>
+</body>
+</html>

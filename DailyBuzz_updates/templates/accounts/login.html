@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .box {
+            background: white;
+            padding: 2rem;
+            width: 420px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.2);
+        }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .errorlist {
+            color: red;
+        }
+        a {
+            color: #6c5ce7;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Log In</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Log In</button>
+        </form>
+
+        <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+    </div>
+</body>
+</html>

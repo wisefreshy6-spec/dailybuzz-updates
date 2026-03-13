@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Activated</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; }
+        .container { max-width: 700px; margin: 80px auto; background: white; padding: 30px; border-radius: 14px; box-shadow: 0 4px 18px rgba(0,0,0,0.08); text-align: center; }
+        .btn { display: inline-block; padding: 12px 18px; background: #6c5ce7; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Successful</h1>
+        <p>Your premium access has been activated.</p>
+        <a href="{% url 'premium_page' %}" class="btn">Go to Premium Page</a>
+    </div>
+</body>
+</html>

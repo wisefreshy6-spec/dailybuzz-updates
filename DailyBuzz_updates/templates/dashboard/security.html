@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+        }
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .topbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 18px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .danger {
+            background: #dc2626;
+        }
+        .section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        .errorlist {
+            color: red;
+        }
+        .msg {
+            color: green;
+        }
+        .light {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div><strong>Daily Buzz Updates</strong></div>
+        <div>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Security</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="msg">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <div class="section" style="margin-top:0; padding-top:0; border-top:none;">
+            <h3>Change Password</h3>
+            <p class="light">Enter your current password and new password. A verification code will be sent to your email before the change is completed.</p>
+
+            <form method="post" action="{% url 'request_password_change' %}">
+                {% csrf_token %}
+                {{ password_form.as_p }}
+                <button type="submit">Request Password Change</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h3>Change Phone Number</h3>
+            <p class="light">Enter your new phone number. A verification code will be sent to your current phone number before the change is completed.</p>
+
+            <form method="post" action="{% url 'request_phone_change' %}">
+                {% csrf_token %}
+                {{ phone_form.as_p }}
+                <button type="submit">Request Phone Number Change</button>
+            </form>
+        </div>
+
+        <div class="section">
+           <div class="section">
+    <h3>Delete Account</h3>
+    <p class="light">This action is permanent and cannot be undone. You must confirm with your password and a code sent to your email.</p>
+
+    <form method="post" action="{% url 'request_delete_account' %}">
+        {% csrf_token %}
+        {{ delete_form.as_p }}
+        <button type="submit" class="danger">Request Account Deletion</button>
+    </form>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -8,25 +8,141 @@
         <link rel="icon" href="{{ site_settings.favicon.url }}">
     {% endif %}
     <style>
-        body { margin: 0; font-family: Arial, sans-serif; background: #eef2f7; color: #1f2937; }
-        .topbar { background: linear-gradient(135deg, #6c5ce7, #00b894); color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-        .brand { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: bold; }
-        .brand img { width: 42px; height: 42px; object-fit: cover; border-radius: 10px; background: rgba(255,255,255,0.18); }
-        .logo-box { width: 42px; height: 42px; border-radius: 10px; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .top-search { flex: 1; min-width: 280px; max-width: 560px; }
-        .top-search form { display: flex; gap: 10px; flex-wrap: wrap; }
-        .top-search input, .top-search select, .top-search button { padding: 11px 12px; border-radius: 10px; border: none; box-sizing: border-box; }
-        .top-search input { flex: 1; min-width: 180px; }
-        .top-search select { min-width: 150px; }
-        .top-search button { background: #111827; color: white; font-weight: bold; cursor: pointer; }
-        .menu-wrapper { position: relative; display: inline-block; }
-        .menu-button { background: transparent; border: none; color: white; font-size: 17px; font-weight: bold; cursor: pointer; }
-        .dropdown { display: none; position: absolute; right: 0; top: 42px; background: white; min-width: 220px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); overflow: hidden; z-index: 1000; }
-        .dropdown a { display: block; padding: 14px 16px; text-decoration: none; color: #333; font-weight: 500; }
-        .dropdown a:hover { background: #f3f4f6; }
-        .menu-wrapper:hover .dropdown { display: block; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #1f2937;
+        }
 
-        .container { max-width: 1200px; margin: 28px auto; padding: 0 20px 40px; }
+        .topbar {
+            background: linear-gradient(135deg, #6c5ce7, #00b894);
+            color: white;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: bold;
+            min-width: 0;
+        }
+
+        .brand img {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.18);
+        }
+
+        .logo-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .brand-text {
+            word-break: break-word;
+        }
+
+        .top-search {
+            flex: 1;
+            min-width: 280px;
+            max-width: 560px;
+        }
+
+        .top-search form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .top-search input,
+        .top-search select,
+        .top-search button {
+            padding: 11px 12px;
+            border-radius: 10px;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        .top-search input {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .top-search select {
+            min-width: 150px;
+        }
+
+        .top-search button {
+            background: #111827;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .menu-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 42px;
+            background: white;
+            min-width: 240px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .dropdown a:hover {
+            background: #f3f4f6;
+        }
+
+        .menu-wrapper:hover .dropdown {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 28px auto;
+            padding: 0 20px 40px;
+        }
 
         .ticker-wrap {
             background: #111827;
@@ -36,6 +152,7 @@
             display: flex;
             align-items: center;
         }
+
         .ticker-label {
             background: #ef4444;
             color: white;
@@ -43,6 +160,7 @@
             font-weight: bold;
             white-space: nowrap;
         }
+
         .ticker {
             overflow: hidden;
             width: 100%;
@@ -51,6 +169,7 @@
             display: flex;
             align-items: center;
         }
+
         .ticker-track {
             display: inline-block;
             white-space: nowrap;
@@ -59,20 +178,38 @@
             padding-left: 100%;
             animation: tickerMove 25s linear infinite;
         }
+
         .ticker-track a {
             color: white;
             text-decoration: none;
             margin-right: 36px;
             font-size: 14px;
         }
+
         @keyframes tickerMove {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
 
-        .banner { background: white; border-radius: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.07); padding: 30px; margin-bottom: 22px; }
-        .banner h1 { margin: 0 0 10px 0; font-size: 38px; }
-        .banner p { margin: 0; color: #667085; line-height: 1.7; font-size: 17px; }
+        .banner {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+            padding: 30px;
+            margin-bottom: 22px;
+        }
+
+        .banner h1 {
+            margin: 0 0 10px 0;
+            font-size: 38px;
+        }
+
+        .banner p {
+            margin: 0;
+            color: #667085;
+            line-height: 1.7;
+            font-size: 17px;
+        }
 
         .carousel-shell {
             background: white;
@@ -81,11 +218,36 @@
             padding: 18px;
             margin-bottom: 26px;
         }
-        .carousel-title { margin: 0 0 14px 0; font-size: 22px; }
-        .carousel-viewport { overflow: hidden; border-radius: 16px; }
-        .carousel-track { display: flex; transition: transform 0.5s ease; }
-        .carousel-slide { min-width: 100%; box-sizing: border-box; position: relative; }
-        .carousel-slide img { width: 100%; height: 360px; object-fit: cover; display: block; border-radius: 16px; }
+
+        .carousel-title {
+            margin: 0 0 14px 0;
+            font-size: 22px;
+        }
+
+        .carousel-viewport {
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+            display: block;
+            border-radius: 16px;
+        }
+
         .carousel-overlay {
             position: absolute;
             left: 0;
@@ -95,35 +257,171 @@
             background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.15));
             border-radius: 0 0 16px 16px;
         }
-        .carousel-overlay a { color: white; text-decoration: none; font-size: 28px; font-weight: bold; line-height: 1.3; }
-        .carousel-meta { color: #e5e7eb; margin-top: 8px; font-size: 14px; }
-        .carousel-dots { text-align: center; margin-top: 12px; }
-        .dot { width: 10px; height: 10px; border-radius: 999px; background: #d1d5db; display: inline-block; margin: 0 4px; cursor: pointer; }
-        .dot.active { background: #6c5ce7; }
 
-        .hero { display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px; margin-bottom: 28px; }
-        .hero-main, .hero-side { background: white; border-radius: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.07); overflow: hidden; }
-        .hero-image { width: 100%; height: 340px; object-fit: cover; display: block; }
-        .hero-content { padding: 24px; }
-        .tag { display: inline-block; background: #efe9ff; color: #5b3fd1; font-weight: bold; padding: 7px 12px; border-radius: 999px; font-size: 13px; margin-bottom: 12px; }
-        .hero-content h2 { margin: 0 0 12px 0; font-size: 32px; line-height: 1.2; }
-        .hero-content p { color: #667085; line-height: 1.7; }
-        .hero-content a { text-decoration: none; color: inherit; }
-        .side-card { padding: 24px; }
-        .side-card h3 { margin-top: 0; }
-        .side-links a { display: block; padding: 12px 0; text-decoration: none; color: #111827; border-bottom: 1px solid #ececec; font-weight: 600; }
+        .carousel-overlay a {
+            color: white;
+            text-decoration: none;
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1.3;
+        }
 
-        .section-title { margin: 28px 0 16px; font-size: 26px; }
-        .categories { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-bottom: 28px; }
-        .category-card { background: white; border-radius: 16px; padding: 18px; text-decoration: none; color: #1f2937; box-shadow: 0 8px 24px rgba(0,0,0,0.06); font-weight: bold; text-align: center; }
+        .carousel-meta {
+            color: #e5e7eb;
+            margin-top: 8px;
+            font-size: 14px;
+        }
 
-        .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-        .post-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-        .post-image { width: 100%; height: 220px; object-fit: cover; display: block; }
-        .post-body { padding: 18px; }
-        .post-body a { text-decoration: none; color: #111827; }
-        .post-body h3 { margin: 0 0 10px 0; }
-        .meta { color: #667085; font-size: 14px; margin-top: 10px; line-height: 1.6; }
+        .carousel-dots {
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: #d1d5db;
+            display: inline-block;
+            margin: 0 4px;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: #6c5ce7;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 22px;
+            margin-bottom: 28px;
+        }
+
+        .hero-main, .hero-side {
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-content {
+            padding: 24px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #efe9ff;
+            color: #5b3fd1;
+            font-weight: bold;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .hero-content h2 {
+            margin: 0 0 12px 0;
+            font-size: 32px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            color: #667085;
+            line-height: 1.7;
+        }
+
+        .hero-content a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .side-card {
+            padding: 24px;
+        }
+
+        .side-card h3 {
+            margin-top: 0;
+        }
+
+        .side-links a {
+            display: block;
+            padding: 12px 0;
+            text-decoration: none;
+            color: #111827;
+            border-bottom: 1px solid #ececec;
+            font-weight: 600;
+        }
+
+        .section-title {
+            margin: 28px 0 16px;
+            font-size: 26px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            text-decoration: none;
+            color: #1f2937;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-body {
+            padding: 18px;
+        }
+
+        .post-body a {
+            text-decoration: none;
+            color: #111827;
+        }
+
+        .post-body h3 {
+            margin: 0 0 10px 0;
+        }
+
+        .meta {
+            color: #667085;
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
 
         .popup-overlay {
             position: fixed;
@@ -135,6 +433,7 @@
             z-index: 5000;
             padding: 20px;
         }
+
         .popup-box {
             background: white;
             width: 100%;
@@ -144,10 +443,12 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.25);
             animation: popupShow 0.25s ease;
         }
+
         @keyframes popupShow {
             from { transform: scale(0.96); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
+
         .popup-top {
             background: linear-gradient(135deg, #ef4444, #f97316);
             color: white;
@@ -156,6 +457,7 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .popup-close {
             background: transparent;
             border: none;
@@ -163,39 +465,47 @@
             font-size: 24px;
             cursor: pointer;
         }
+
         .popup-image {
             width: 100%;
             height: 280px;
             object-fit: cover;
             display: block;
         }
+
         .popup-body {
             padding: 22px;
         }
+
         .popup-body h2 {
             margin-top: 0;
             margin-bottom: 12px;
         }
+
         .popup-body p {
             color: #667085;
             line-height: 1.7;
         }
+
         .popup-actions {
             display: flex;
             gap: 12px;
             margin-top: 18px;
             flex-wrap: wrap;
         }
+
         .popup-btn {
             padding: 12px 16px;
             border-radius: 10px;
             text-decoration: none;
             font-weight: bold;
         }
+
         .popup-primary {
             background: #6c5ce7;
             color: white;
         }
+
         .popup-secondary {
             background: #f3f4f6;
             color: #111827;
@@ -207,86 +517,125 @@
             .categories { grid-template-columns: repeat(3, 1fr); }
             .carousel-slide img { height: 280px; }
         }
+
         @media (max-width: 700px) {
             .banner h1 { font-size: 30px; }
             .categories { grid-template-columns: repeat(2, 1fr); }
             .carousel-overlay a { font-size: 22px; }
-        }
-    </style>
-    <script>
-    function urlBase64ToUint8Array(base64String) {
-        const padding = '='.repeat((4 - base64String.length % 4) % 4);
-        const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-        const rawData = window.atob(base64);
-        const outputArray = new Uint8Array(rawData.length);
 
-        for (let i = 0; i < rawData.length; ++i) {
-            outputArray[i] = rawData.charCodeAt(i);
-        }
-        return outputArray;
-    }
-
-    <a href="{% url 'notifications' %}">
-    Notifications
-    {% if unread_notifications_count > 0 %}
-        <span class="badge bg-danger">{{ unread_notifications_count }}</span>
-    {% endif %}
-</a>
-
-<a href="{% url 'creator_dashboard' %}">Creator Dashboard</a>
-<a href="{% url 'submit_content' %}">Submit Content</a>
-<a href="{% url 'trending_news' %}">Trending</a>
-
-    async function registerPushNotifications() {
-        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-            return;
-        }
-
-        try {
-            const registration = await navigator.serviceWorker.register('/static/js/sw.js');
-
-            const keyResponse = await fetch("{% url 'push_public_key' %}");
-            const keyData = await keyResponse.json();
-
-            let subscription = await registration.pushManager.getSubscription();
-
-            if (!subscription) {
-                const permission = await Notification.requestPermission();
-                if (permission !== 'granted') {
-                    return;
-                }
-
-                subscription = await registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array(keyData.publicKey)
-                });
+            .topbar {
+                flex-direction: column;
+                align-items: stretch;
             }
 
-            await fetch("{% url 'save_push_subscription' %}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": "{{ csrf_token }}"
-                },
-                body: JSON.stringify({
-                    subscription: {
-                        endpoint: subscription.endpoint,
-                        keys: {
-                            p256dh: subscription.toJSON().keys.p256dh,
-                            auth: subscription.toJSON().keys.auth
-                        }
-                    }
-                })
-            });
-        } catch (error) {
-            console.log("Push registration failed:", error);
-        }
-    }
+            .brand {
+                justify-content: center;
+                text-align: center;
+            }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        registerPushNotifications();
-    });
-</script>
+            .brand-text {
+                text-align: center;
+                font-size: 18px;
+            }
+
+            .top-search {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .top-search form {
+                flex-direction: column;
+            }
+
+            .top-search input,
+            .top-search select,
+            .top-search button {
+                width: 100%;
+            }
+
+            .menu-wrapper {
+                width: 100%;
+                text-align: center;
+            }
+
+            .menu-button {
+                width: 100%;
+                padding: 12px;
+                background: rgba(255,255,255,0.12);
+                border-radius: 10px;
+            }
+
+            .dropdown {
+                position: static;
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+
+    <script>
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+
+        async function registerPushNotifications() {
+            if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+                return;
+            }
+
+            try {
+                const registration = await navigator.serviceWorker.register('/static/js/sw.js');
+
+                const keyResponse = await fetch("{% url 'push_public_key' %}");
+                const keyData = await keyResponse.json();
+
+                let subscription = await registration.pushManager.getSubscription();
+
+                if (!subscription) {
+                    const permission = await Notification.requestPermission();
+                    if (permission !== 'granted') {
+                        return;
+                    }
+
+                    subscription = await registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: urlBase64ToUint8Array(keyData.publicKey)
+                    });
+                }
+
+                await fetch("{% url 'save_push_subscription' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({
+                        subscription: {
+                            endpoint: subscription.endpoint,
+                            keys: {
+                                p256dh: subscription.toJSON().keys.p256dh,
+                                auth: subscription.toJSON().keys.auth
+                            }
+                        }
+                    })
+                });
+            } catch (error) {
+                console.log("Push registration failed:", error);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            registerPushNotifications();
+        });
+    </script>
 </head>
 <body>
     <div class="topbar">
@@ -296,7 +645,9 @@
             {% else %}
                 <div class="logo-box">DB</div>
             {% endif %}
-            <div>{% if site_settings %}{{ site_settings.site_name }}{% else %}Daily Buzz Updates{% endif %}</div>
+            <div class="brand-text">
+                {% if site_settings %}{{ site_settings.site_name }}{% else %}Daily Buzz Updates{% endif %}
+            </div>
         </div>
 
         <div class="top-search">
@@ -320,9 +671,11 @@
             <div class="dropdown">
                 <a href="{% url 'profile' %}">Profile</a>
                 <a href="{% url 'security' %}">Security</a>
+                <a href="{% url 'creator_dashboard' %}">Creator Dashboard</a>
+                <a href="{% url 'submit_content' %}">Submit Content</a>
+                <a href="{% url 'trending_news' %}">Trending</a>
                 <a href="{% url 'premium_page' %}">Premium</a>
                 <a href="{% url 'support_center' %}">Support</a>
-                <a href="{% url 'submit_content' %}">Submit Content</a>
                 {% if user.is_staff %}
                     <a href="{% url 'admin_news_list' %}">Manage News</a>
                     <a href="{% url 'admin_support_list' %}">Support Cases</a>
@@ -331,7 +684,6 @@
             </div>
         </div>
     </div>
-
     <div class="container">
         {% if breaking_posts %}
             <div class="ticker-wrap">

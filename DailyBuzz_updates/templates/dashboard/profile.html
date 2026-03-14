@@ -4,25 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6fb;
-            margin: 0;
-        }
+  <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f5f7fb;
+    }
+
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 14px 18px;
+        background: #111827;
+        color: white;
+    }
+
+    .topbar-brand {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .topbar-links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .topbar-links a {
+        color: white;
+        text-decoration: none;
+        background: rgba(255,255,255,0.08);
+        padding: 9px 12px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    .topbar-links a:hover {
+        background: rgba(255,255,255,0.16);
+    }
+
+    @media (max-width: 768px) {
         .topbar {
-            background: linear-gradient(135deg, #6c5ce7, #00b894);
-            color: white;
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            align-items: stretch;
         }
-        .topbar a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            margin-left: 20px;
+
+        .topbar-brand {
+            text-align: center;
         }
+
+        .topbar-links {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .topbar-links a {
+            flex: 1 1 auto;
+            min-width: 90px;
+            text-align: center;
+        }
+    }
+</style>
         .container {
             max-width: 850px;
             margin: 30px auto;
@@ -48,8 +94,10 @@
 </head>
 <body>
     <div class="topbar">
-        <div><strong>Daily Buzz Updates</strong></div>
-        <div>
+        <div class="topbar-brand">
+            <strong>Daily Buzz Updates</strong>
+        </div>
+        <div class="topbar-links">
             <a href="{% url 'dashboard' %}">Dashboard</a>
             <a href="{% url 'security' %}">Security</a>
             <a href="{% url 'logout' %}">Logout</a>
